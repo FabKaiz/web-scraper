@@ -5,7 +5,10 @@ const exportExcel = (data, workSheetColumnNames, workSheetName) => {
   const workSheetData = [workSheetColumnNames, ...data]
   const workSheet = xlsx.utils.aoa_to_sheet(workSheetData)
   xlsx.utils.book_append_sheet(workBook, workSheet, workSheetName)
-  xlsx.writeFile(workBook, 'TESTING.xlsx')
+  const date = new Date()
+  const hours = date.getHours()
+  const minutes = date.getMinutes()
+  xlsx.writeFile(workBook, `Produit Onikha - ${date.toLocaleDateString("fr")} à ${hours}h${minutes}.xlsx`)
 }
 
 const exportArticlesToExcel = (
@@ -56,4 +59,25 @@ const getData = () => {
     })
 }
 
-btn.addEventListener('click', () => getData())
+function move() {
+  const loadingDiv = document.querySelector('.loading-container')
+  const progressBar = document.getElementById("myBar");
+  let width = 0;
+  loadingDiv.style.visibility = 'visible';
+  loadingDiv.style.opacity = 1
+  const id = setInterval(frame, 170);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+    } else {
+      width++; 
+      progressBar.style.width = width + '%'; 
+      progressBar.innerHTML = width * 1  + '%';
+    }
+  }
+}
+
+btn.addEventListener('click', () => {
+  getData()
+  move()
+})
