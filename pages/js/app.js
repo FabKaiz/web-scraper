@@ -33,7 +33,7 @@ const btn = document.querySelector('button')
 
 
 const getData = () => {
-  fetch('http://localhost:8000/articles')
+  fetch('https://onikha-scraping.herokuapp.com/articles')
     .then((res) => res.json())
     .then((data) => {
       const articles = data
