@@ -4,6 +4,7 @@ const cheerio = require('cheerio')
 const express = require('express')
 
 const app = express()
+let maxPages
 
 // Static files
 app.use(express.static('.'))
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
 
 app.get('/articles', async (req, res) => {
   const articles = []
+  getMaxPages()
 
   // Get 10 pages and store data in articles array every 5 seconds
   for (let i = 1; i < 11; i++) {
@@ -36,7 +38,7 @@ app.get('/articles', async (req, res) => {
   }, 10000)
 
   setTimeout(() => {
-    for (let i = 31; i < 38; i++) {
+    for (let i = 31; i < maxPages + 1; i++) {
       scrapeOne(i, articles)
     }
   }, 15000)
@@ -44,9 +46,25 @@ app.get('/articles', async (req, res) => {
   // Send the array to the front at '/articles'
   setTimeout(() => {
     res.json(articles)
-    console.log('articles list updated successfully')
-  }, 18000)
+  }, 20000)
 })
+
+const getMaxPages = async () => {
+  const url = `https://shop.onikha.com/fr/Catalogue.html?All=1&page=1`
+
+  axios(url).then((res) => {
+    const html = res.data
+    const $ = cheerio.load(html)
+
+    // Get number of pages
+    const pages = $('.PaginationHaut')
+      .find('.Numero')
+      .find('a:nth-child(5)')
+      .text()
+      
+    maxPages = parseInt(pages)
+  })
+}
 
 // --=== SCRAPE ONE PAGE ===--
 const scrapeOne = (number, articlesArray) => {

@@ -65,7 +65,7 @@ function move() {
   let width = 0;
   loadingDiv.style.visibility = 'visible';
   loadingDiv.style.opacity = 1
-  const id = setInterval(frame, 170);
+  const id = setInterval(frame, 190);
   function frame() {
     if (width >= 100) {
       clearInterval(id);
