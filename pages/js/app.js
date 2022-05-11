@@ -8,7 +8,12 @@ const exportExcel = (data, workSheetColumnNames, workSheetName) => {
   const date = new Date()
   const hours = date.getHours()
   const minutes = date.getMinutes()
-  xlsx.writeFile(workBook, `Produit Onikha - ${date.toLocaleDateString("fr")} à ${hours}h${minutes}.xlsx`)
+  xlsx.writeFile(
+    workBook,
+    `Produit Onikha - ${date.toLocaleDateString(
+      'fr'
+    )} à ${hours}h${minutes}.xlsx`
+  )
 }
 
 const exportArticlesToExcel = (
@@ -30,7 +35,6 @@ const exportArticlesToExcel = (
 }
 
 const btn = document.querySelector('button')
-
 
 const getData = () => {
   fetch('https://onikha-scraping.herokuapp.com/articles')
@@ -61,18 +65,18 @@ const getData = () => {
 
 function move() {
   const loadingDiv = document.querySelector('.loading-container')
-  const progressBar = document.getElementById("myBar");
-  let width = 0;
-  loadingDiv.style.visibility = 'visible';
+  const progressBar = document.getElementById('myBar')
+  let width = 0
+  loadingDiv.style.visibility = 'visible'
   loadingDiv.style.opacity = 1
-  const id = setInterval(frame, 190);
+  const id = setInterval(frame, 190)
   function frame() {
     if (width >= 100) {
-      clearInterval(id);
+      clearInterval(id)
     } else {
-      width++; 
-      progressBar.style.width = width + '%'; 
-      progressBar.innerHTML = width * 1  + '%';
+      width++
+      progressBar.style.width = width + '%'
+      progressBar.innerHTML = width * 1 + '%'
     }
   }
 }
