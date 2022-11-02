@@ -66,6 +66,7 @@ const getMaxPages = async () => {
   })
 }
 
+
 // --=== SCRAPE ONE PAGE ===--
 const scrapeOne = (number, articlesArray) => {
   const url = `https://shop.onikha.com/fr/Catalogue.html?All=1&page=${number}`
