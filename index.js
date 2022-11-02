@@ -94,10 +94,11 @@ const scrapeOne = (number, articlesArray) => {
         .replace(/\s+/g, '')
         .replace(/ *\([^)]*\) */g, '')
         .replace('€', '')
+        .replace(',', '.')
 
-      // Get the pro price
-      const prixProTtc = parseInt(prixPublicTtc.replace('€', ''))
-      const prixProTtcCleaned = (prixProTtc - prixProTtc * 0.4).toFixed(2)
+      // Get the pro price withtout VAT and public price converted to a Number
+      const prixPublicTtcCleaned = parseFloat(prixPublicTtc)
+      const prixProTtcCleaned = Number((prixPublicTtcCleaned - prixPublicTtcCleaned * 0.4).toFixed(2))
 
       // Get the name of the product
       const productName = $(this)
@@ -130,8 +131,8 @@ const scrapeOne = (number, articlesArray) => {
       articlesArray.push({
         Reference: ref,
         Nomduproduit: productName,
-        prixPublic: Number(prixPublicTtc),
-        prixPro: Number(prixProTtcCleaned),
+        prixPublic: prixPublicTtcCleaned,
+        prixPro: prixProTtcCleaned,
         Stock: Number(stock),
         Famille: famille,
       })
