@@ -61,7 +61,7 @@ const getMaxPages = async () => {
       .find('.Numero')
       .find('a:nth-child(5)')
       .text()
-      
+
     maxPages = parseInt(pages)
   })
 }
@@ -91,11 +91,12 @@ const scrapeOne = (number, articlesArray) => {
         .text()
         .replace('Prix TTC', '')
         .replace(/\s+/g, '')
+        .replace(/ *\([^)]*\) */g, '')
         .replace('€', '')
 
       // Get the pro price
       const prixProTtc = parseInt(prixPublicTtc.replace('€', ''))
-      const prixProTtcCleaned = (prixProTtc - prixProTtc * 0.35).toFixed(2)
+      const prixProTtcCleaned = (prixProTtc - prixProTtc * 0.4).toFixed(2)
 
       // Get the name of the product
       const productName = $(this)
@@ -128,9 +129,9 @@ const scrapeOne = (number, articlesArray) => {
       articlesArray.push({
         Reference: ref,
         Nomduproduit: productName,
-        prixPublic: prixPublicTtc,
-        prixPro: prixProTtcCleaned,
-        Stock: stock,
+        prixPublic: Number(prixPublicTtc),
+        prixPro: Number(prixProTtcCleaned),
+        Stock: Number(stock),
         Famille: famille,
       })
     })
