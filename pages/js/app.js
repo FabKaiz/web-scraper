@@ -37,7 +37,7 @@ const exportArticlesToExcel = (
 const btn = document.querySelector('button')
 
 const getData = () => {
-  fetch('https://onikha-scraping.herokuapp.com/articles')
+  fetch('https://onikha-scraping.up.railway.app/articles')
     .then((res) => res.json())
     .then((data) => {
       const articles = data
